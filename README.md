@@ -37,12 +37,7 @@
 
 Проект находится в директории `homework`.
 
-1. Перейдите в корень проекта:
-   ```bash
-   cd ~/PycharmProjects/python_advanced/module_26_fastapi/homework
-   ```
-
-2. Запустите приложение с помощью `uvicorn`:
+1. Запустите приложение с помощью `uvicorn`:
    ```bash
    uvicorn src.main:app --reload
    ```
