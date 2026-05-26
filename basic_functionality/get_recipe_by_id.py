@@ -25,9 +25,7 @@ async def get_recipe_by_id(recipe_id: int):
             await session.execute(
                 update(Recipe)
                 .where(Recipe.id == recipe_id)
-                .values(
-                    number_of_recipe_views=Recipe.number_of_recipe_views + 1
-                )
+                .values(number_of_recipe_views=Recipe.number_of_recipe_views + 1)
             )
 
             stmt = await session.execute(

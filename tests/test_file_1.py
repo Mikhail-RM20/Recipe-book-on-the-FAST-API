@@ -31,9 +31,7 @@ def test_add_new_recipe():
 
     ing = ingredients[0]
     assert isinstance(ing, dict)
-    assert (
-        len(ing) >= 1
-    )  # без жёсткого ожидания test_ingredient / quantity_ingredients
+    assert len(ing) >= 1  # без жёсткого ожидания test_ingredient / quantity_ingredients
 
 
 def test_get_all_recipes():
