@@ -31,7 +31,6 @@ PyYAML
 ruff
 SQLAlchemy
 starlette
-typing-inspection
 typing_extensions
 uvicorn
 virtualenv
