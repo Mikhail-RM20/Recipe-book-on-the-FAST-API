@@ -8,10 +8,11 @@ from src import Recipe, RecipeIngredient, RecipeOut, async_session
 main_log = logging.getLogger("main")
 
 
-async def get_recipe_by_id(recipe_id: int):
+async def get_recipe_by_id(recipe_id: int) -> list[RecipeOut]:
     """
     EN:
-        The function takes a parameter in the form of a recipe ID and returns all data associated with this recipe.
+        The function takes a parameter in the form of a recipe
+         ID and returns all data associated with this recipe.
     RU:
 
     """
@@ -38,20 +39,27 @@ async def get_recipe_by_id(recipe_id: int):
 
         information_dish_list = []
         for information_dish in result_check:
-            data_recipe = {
-                "id": information_dish.id,
-                "name_recipe": information_dish.name_recipe,
-                "cooking_time_minutes": information_dish.cooking_time_minutes,
-                "number_of_recipe_views": information_dish.number_of_recipe_views,
-                "ingredients": [
+            ingredients = []
+            for information_ingredient in information_dish.ingredients:
+                ingredient_name = information_ingredient.ingredient.name_ingredient
+                ingredients.append(
                     {
-                        "name_ingredient": information_ingredient.ingredient.name_ingredient,
-                        "quantity_ingredient": information_ingredient.quantity_ingredient,
+                        "name_ingredient": ingredient_name,
+                        "quantity_ingredient": information_ingredient
+                        .quantity_ingredient,
                     }
-                    for information_ingredient in information_dish.ingredients
-                ],
-            }
-            information_dish_list.append(RecipeOut(**data_recipe))
+
+                )
+
+        information_dish_list.append(
+            RecipeOut(
+                id=information_dish.id,
+                name_recipe=information_dish.name_recipe,
+                cooking_time_minutes=information_dish.cooking_time_minutes,
+                number_of_recipe_views=information_dish.number_of_recipe_views,
+                ingredients=ingredients,
+            )
+        )
         main_log.debug(
             "The function `get_recipe_by_id` successfully completed its execution."
         )
