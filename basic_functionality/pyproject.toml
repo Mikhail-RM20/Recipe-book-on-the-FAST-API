@@ -18,9 +18,9 @@ target-version = ["py312"]
 profile = "black"
 line_length = 88
 known_first_party = ["src", "basic_functionality"]
-
-[tool.mypy]
-python_version = "3.12"
-warn_unused_configs = true
-warn_return_any = false
-check_untyped_defs = true
+[tool.isort]
+profile = "black"
+line_length = 88
+src_paths = ["src", "basic_functionality"]
+known_first_party = ["src"]
+combine_as_imports = true
