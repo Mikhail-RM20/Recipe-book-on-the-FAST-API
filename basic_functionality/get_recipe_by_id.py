@@ -1,4 +1,5 @@
 import logging
+from typing import List
 
 from sqlalchemy import select, update
 from sqlalchemy.orm import selectinload
