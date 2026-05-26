@@ -60,7 +60,15 @@ async def get_all_recipes() -> List[Dict[str, str]]:
                     for d in data.ingredients
                 ],
             }
-            information_dish.append(RecipeOut(**result_data))
+            information_dish.append(
+    RecipeOut(
+        id=result_data["id"],
+        name_recipe=result_data["name_recipe"],
+        cooking_time_minutes=result_data["cooking_time_minutes"],
+        number_of_recipe_views=result_data["number_of_recipe_views"],
+        ingredients=result_data["ingredients"],
+    )
+)
         main_log.debug(
             "The function `get_all_recipes` successfully completed its execution."
         )
