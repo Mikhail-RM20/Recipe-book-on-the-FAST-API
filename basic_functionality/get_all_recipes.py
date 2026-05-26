@@ -1,4 +1,5 @@
 import logging
+from typing import List
 
 from sqlalchemy import desc, select, update
 from sqlalchemy.orm import selectinload
@@ -8,7 +9,7 @@ from src import Recipe, RecipeIngredient, RecipeOut, async_session
 main_log = logging.getLogger("main")
 
 
-async def get_all_recipes() -> list[RecipeOut]:
+async def get_all_recipes() -> List[RecipeOut]:
     """
     EN:
         The function takes all recipes from the database,
