@@ -42,7 +42,7 @@ async def get_recipe_by_id(recipe_id: int):
 
             result_check = stmt.scalars().all()
 
-         information_dish_list = []
+        information_dish_list = []
         for information_dish in result_check:
             data_recipe = {
                 "id": information_dish.id,
