@@ -58,14 +58,14 @@ async def get_recipe_by_id(recipe_id: int):
                 ],
             }
            information_dish_list.append(
-    RecipeOut(
-        id=data_recipe["id"],
-        name_recipe=data_recipe["name_recipe"],
-        cooking_time_minutes=data_recipe["cooking_time_minutes"],
-        number_of_recipe_views=data_recipe["number_of_recipe_views"],
-        ingredients=data_recipe["ingredients"],
-    )
-)
+                RecipeOut(
+                    id=data_recipe["id"],
+                    name_recipe=data_recipe["name_recipe"],
+                    cooking_time_minutes=data_recipe["cooking_time_minutes"],
+                    number_of_recipe_views=data_recipe["number_of_recipe_views"],
+                    ingredients=data_recipe["ingredients"],
+                )
+            )
         main_log.debug(
             "The function `get_recipe_by_id` successfully completed its execution."
         )
