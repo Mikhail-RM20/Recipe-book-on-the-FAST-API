@@ -1,9 +1,6 @@
 from .database import async_session
-from .modules import Ingredient
-from .modules import Recipe
-from .modules import RecipeIngredient
-from .schemas import RecipeIn
-from .schemas import RecipeOut
+from .modules import Ingredient, Recipe, RecipeIngredient
+from .schemas import RecipeIn, RecipeOut
 
 __all__ = [
     "async_session",

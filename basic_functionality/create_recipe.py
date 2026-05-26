@@ -2,12 +2,7 @@ import logging
 
 from sqlalchemy import select
 
-from src import Ingredient
-from src import Recipe
-from src import RecipeIn
-from src import RecipeIngredient
-from src import RecipeOut
-from src import async_session
+from src import Ingredient, Recipe, RecipeIn, RecipeIngredient, RecipeOut, async_session
 
 main_log = logging.getLogger("main")
 
@@ -50,8 +45,7 @@ async def add_new_recipe(recipe: RecipeIn) -> RecipeOut:
             for ingredient in recipe.ingredients:
                 result_check_ingredient = await session.execute(
                     select(Ingredient).where(
-                        Ingredient.name_ingredient
-                        == ingredient.name_ingredient
+                        Ingredient.name_ingredient == ingredient.name_ingredient
                     )
                 )
                 check_ingredient = result_check_ingredient.scalars().first()
@@ -85,8 +79,8 @@ async def add_new_recipe(recipe: RecipeIn) -> RecipeOut:
                         quantity_ingredient=ingredient.quantity_ingredients,
                     )
                     session.add(recipe_ing)
-                    information_ingredient[new_ingredient.name_ingredient] = (
-                        str(ingredient.quantity_ingredients)
+                    information_ingredient[new_ingredient.name_ingredient] = str(
+                        ingredient.quantity_ingredients
                     )
                     list_ingredients.append(information_ingredient)
                     main_log.info("Recipe created successfully.")

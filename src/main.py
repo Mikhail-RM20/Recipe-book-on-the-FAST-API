@@ -6,11 +6,10 @@ from fastapi import FastAPI
 from basic_functionality.create_recipe import add_new_recipe
 from basic_functionality.get_all_recipes import get_all_recipes
 from basic_functionality.get_recipe_by_id import get_recipe_by_id
-from .database import Base
-from .database import engine
+
+from .database import Base, engine
 from .logger import dict_config
-from .schemas import RecipeIn
-from .schemas import RecipeOut
+from .schemas import RecipeIn, RecipeOut
 
 logging.config.dictConfig(dict_config)
 
@@ -58,7 +57,8 @@ async def get_recipes():
         - The main logic is implemented in the `get_all_recipes` function.
 
     RU:
-        Получает список всех рецептов, а так же ингредиентов, необходимых для приготовления.
+        Получает список всех рецептов,
+         а так же ингредиентов, необходимых для приготовления.
 
         - Основная логика реализована в функции `get_all_recipes`.
     """

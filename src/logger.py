@@ -3,7 +3,9 @@ dict_config = {
     "disable_existing_loggers": False,
     "formatters": {
         "base": {
-            "format": "%(asctime)s | %(name)s | %(levelname)s | %(message)s | %(lineno)d",
+            "format": (
+                "%(asctime)s | %(name)s | %(levelname)s | " "%(message)s | %(lineno)d"
+            )
         }
     },
     "handlers": {
