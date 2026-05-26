@@ -46,9 +46,8 @@ async def get_recipe_by_id(recipe_id: int) -> list[RecipeOut]:
                 ingredients.append(
                     {
                         "name_ingredient": ingredient_name,
-                        "quantity_ingredient": ingredient_quantity
+                        "quantity_ingredient": ingredient_quantity,
                     }
-
                 )
 
         information_dish_list.append(
