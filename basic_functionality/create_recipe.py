@@ -2,7 +2,14 @@ import logging
 
 from sqlalchemy import select
 
-from src import Ingredient, Recipe, RecipeIn, RecipeIngredient, RecipeOut, async_session
+from src import (
+    Ingredient,
+    Recipe,
+    RecipeIn,
+    RecipeIngredient,
+    RecipeOut,
+    async_session,
+)
 
 main_log = logging.getLogger("main")
 
