@@ -1,6 +1,7 @@
 import logging
 from typing import Dict
 from typing import List
+from typing import cast
 
 from sqlalchemy import desc
 from sqlalchemy import select
@@ -62,11 +63,11 @@ async def get_all_recipes() -> List[Dict[str, str]]:
             }
             information_dish.append(
                 RecipeOut(
-                    id=result_data["id"],
-                    name_recipe=result_data["name_recipe"],
-                    cooking_time_minutes=result_data["cooking_time_minutes"],
-                    number_of_recipe_views=result_data["number_of_recipe_views"],
-                    ingredients=result_data["ingredients"],
+                    id=cast(int, result_data["id"]),
+                    name_recipe=cast(str, result_data["name_recipe"]),
+                    cooking_time_minutes=cast(int, result_data["cooking_time_minutes"]),
+                    number_of_recipe_views=cast(int, result_data["number_of_recipe_views"]),
+                    ingredients=cast(list[dict[str, str]], result_data["ingredients"]),
                 )
             )
         main_log.debug(
