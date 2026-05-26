@@ -1,25 +1,34 @@
 import pytest
-from fastapi.testclient import TestClient
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
-from src.database import Base, engine, get_db
+from src.database import Base, DATABASE_URL
 from src.main import app
 
 
+test_engine = create_async_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False},
+)
+
+TestSessionLocal = async_sessionmaker(
+    bind=test_engine,
+    expire_on_commit=False,
+    class_=AsyncSession,
+)
+
+
 @pytest.fixture(scope="session", autouse=True)
-def prepare_database():
-    Base.metadata.create_all(bind=engine)
+async def prepare_database():
+    async with test_engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
     yield
-    Base.metadata.drop_all(bind=engine)
+    async with test_engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
 
 
-def override_get_db():
-    yield from get_db()
+async def override_get_db():
+    async with TestSessionLocal() as session:
+        yield session
 
 
-app.dependency_overrides[get_db] = override_get_db
-
-
-@pytest.fixture(scope="module")
-def client():
-    with TestClient(app) as c:
-        yield c
+app.dependency_overrides.clear()
