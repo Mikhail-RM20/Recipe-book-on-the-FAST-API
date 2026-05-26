@@ -8,7 +8,7 @@ from src import Recipe, RecipeIngredient, RecipeOut, async_session
 main_log = logging.getLogger("main")
 
 
-async def get_recipe_by_id(recipe_id: int) -> list[RecipeOut]:
+async def get_recipe_by_id(recipe_id: int) -> List[RecipeOut]:
     """
     EN:
         The function takes a parameter in the form of a recipe
