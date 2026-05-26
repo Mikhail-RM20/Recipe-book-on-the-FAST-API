@@ -1,13 +1,9 @@
 import logging
 
-from sqlalchemy import select
-from sqlalchemy import update
+from sqlalchemy import select, update
 from sqlalchemy.orm import selectinload
 
-from src import Recipe
-from src import RecipeIngredient
-from src import RecipeOut
-from src import async_session
+from src import Recipe, RecipeIngredient, RecipeOut, async_session
 
 main_log = logging.getLogger("main")
 

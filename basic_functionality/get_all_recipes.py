@@ -1,16 +1,10 @@
 import logging
-from typing import Dict
-from typing import List
+from typing import Dict, List
 
-from sqlalchemy import desc
-from sqlalchemy import select
-from sqlalchemy import update
+from sqlalchemy import desc, select, update
 from sqlalchemy.orm import selectinload
 
-from src import Recipe
-from src import RecipeIngredient
-from src import RecipeOut
-from src import async_session
+from src import Recipe, RecipeIngredient, RecipeOut, async_session
 
 main_log = logging.getLogger("main")
 
