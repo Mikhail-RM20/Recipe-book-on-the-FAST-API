@@ -4,6 +4,8 @@ from sqlalchemy import select
 from sqlalchemy import update
 from sqlalchemy.orm import selectinload
 
+from typing import cast
+
 from src import Recipe
 from src import RecipeIngredient
 from src import RecipeOut
@@ -57,13 +59,13 @@ async def get_recipe_by_id(recipe_id: int):
                     for information_ingredient in information_dish.ingredients
                 ],
             }
-            information_dish_list.append(
+            information_dish.append(
                 RecipeOut(
-                    id=data_recipe["id"],
-                    name_recipe=data_recipe["name_recipe"],
-                    cooking_time_minutes=data_recipe["cooking_time_minutes"],
-                    number_of_recipe_views=data_recipe["number_of_recipe_views"],
-                    ingredients=data_recipe["ingredients"],
+                    id=cast(int, result_data["id"]),
+                    name_recipe=cast(str, result_data["name_recipe"]),
+                    cooking_time_minutes=cast(int, result_data["cooking_time_minutes"]),
+                    number_of_recipe_views=cast(int, result_data["number_of_recipe_views"]),
+                    ingredients=cast(list[dict[str, str]], result_data["ingredients"]),
                 )
             )
         main_log.debug(
