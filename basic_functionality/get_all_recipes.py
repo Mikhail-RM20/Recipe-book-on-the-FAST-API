@@ -16,7 +16,7 @@ from src import async_session
 main_log = logging.getLogger("main")
 
 
-async def get_all_recipes() -> List[Dict[str, str]]:
+async def get_all_recipes() -> List[RecipeOut]:
     """
     EN:
         The function takes all recipes from the database, as well as the ingredients for this recipe,
