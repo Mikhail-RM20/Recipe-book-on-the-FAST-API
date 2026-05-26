@@ -7,3 +7,6 @@ line_length = 88
 src_paths = ["src", "basic_functionality"]
 known_first_party = ["src", "basic_functionality"]
 skip_gitignore = true
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
