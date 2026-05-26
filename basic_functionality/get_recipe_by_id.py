@@ -14,7 +14,7 @@ from src import async_session
 main_log = logging.getLogger("main")
 
 
-async def get_recipe_by_id(recipe_id: int):
+async def get_recipe_by_id(recipe_id: int) -> List[RecipeOut]:
     """
     EN:
         The function takes a parameter in the form of a recipe ID and returns all data associated with this recipe.
