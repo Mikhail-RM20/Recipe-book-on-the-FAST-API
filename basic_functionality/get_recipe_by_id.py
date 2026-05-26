@@ -4,6 +4,8 @@ from sqlalchemy import select
 from sqlalchemy import update
 from sqlalchemy.orm import selectinload
 
+from typing import cast
+
 from src import Recipe
 from src import RecipeIngredient
 from src import RecipeOut
@@ -12,7 +14,7 @@ from src import async_session
 main_log = logging.getLogger("main")
 
 
-async def get_recipe_by_id(recipe_id: int):
+async def get_recipe_by_id(recipe_id: int) -> List[RecipeOut]:
     """
     EN:
         The function takes a parameter in the form of a recipe ID and returns all data associated with this recipe.
@@ -57,7 +59,15 @@ async def get_recipe_by_id(recipe_id: int):
                     for information_ingredient in information_dish.ingredients
                 ],
             }
-            information_dish_list.append(RecipeOut(**data_recipe))
+            information_dish.append(
+                RecipeOut(
+                    id=cast(int, result_data["id"]),
+                    name_recipe=cast(str, result_data["name_recipe"]),
+                    cooking_time_minutes=cast(int, result_data["cooking_time_minutes"]),
+                    number_of_recipe_views=cast(int, result_data["number_of_recipe_views"]),
+                    ingredients=cast(list[dict[str, str]], result_data["ingredients"]),
+                )
+            )
         main_log.debug(
             "The function `get_recipe_by_id` successfully completed its execution."
         )

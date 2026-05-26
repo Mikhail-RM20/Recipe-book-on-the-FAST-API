@@ -2,8 +2,6 @@ from fastapi.testclient import TestClient
 
 from src.main import app
 
-test_client = TestClient(app)
-
 
 def test_add_new_recipe():
     example = {
@@ -16,7 +14,8 @@ def test_add_new_recipe():
             }
         ],
     }
-    response = test_client.post("/recipes", json=example)
+    with TestClient(app) as test_client:
+        response = test_client.post("/recipes", json=example)
     assert response.status_code == 200
 
     data = response.json()
@@ -27,17 +26,14 @@ def test_add_new_recipe():
     assert isinstance(data["id"], int)
 
     ingredients = data["ingredients"]
-    assert len(ingredients) >= 1  # хотя бы один ингредиент
+    assert len(ingredients) >= 1
 
     ing = ingredients[0]
     assert isinstance(ing, dict)
-    assert (
-        len(ing) >= 1
-    )  # без жёсткого ожидания test_ingredient / quantity_ingredients
+    assert len(ing) >= 1
 
 
 def test_get_all_recipes():
-    # 4 тестовых рецепта
     recipes_data = [
         {
             "name_recipe": "test_dish_5",
@@ -82,25 +78,22 @@ def test_get_all_recipes():
     ]
 
     created_recipes = []
-    for example in recipes_data:
-        response = test_client.post("/recipes", json=example)
-        assert response.status_code == 200
-        created_recipes.append(response.json())
+    with TestClient(app) as test_client:
+        for example in recipes_data:
+            response = test_client.post("/recipes", json=example)
+            assert response.status_code == 200
+            created_recipes.append(response.json())
 
-    # Возвращаемся к GET /recipes
-    all_response = test_client.get("/recipes")
+        all_response = test_client.get("/recipes")
     assert all_response.status_code == 200
     all_data = all_response.json()
 
     assert len(all_data) >= 4
 
-    # Проверяем, что наши созданные ID есть среди ответа
     created_ids = {r["id"] for r in created_recipes}
     response_ids = {r["id"] for r in all_data}
-    # часть наших рецептов точно есть
     assert created_ids.issubset(response_ids)
 
-    # Для каждого рецепта в ответе — базовые проверки
     for recipe in all_data:
         assert isinstance(recipe["id"], int)
         assert isinstance(recipe["name_recipe"], str)
@@ -115,7 +108,8 @@ def test_get_all_recipes():
 
 def test_get_recipe_by_id():
     recipe_id = 1
-    response = test_client.get(f"/recipes/{recipe_id}")
+    with TestClient(app) as test_client:
+        response = test_client.get(f"/recipes/{recipe_id}")
     assert response.status_code == 200
 
     data = response.json()

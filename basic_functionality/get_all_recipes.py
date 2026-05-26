@@ -1,6 +1,7 @@
 import logging
 from typing import Dict
 from typing import List
+from typing import cast
 
 from sqlalchemy import desc
 from sqlalchemy import select
@@ -15,7 +16,7 @@ from src import async_session
 main_log = logging.getLogger("main")
 
 
-async def get_all_recipes() -> List[Dict[str, str]]:
+async def get_all_recipes() -> List[RecipeOut]:
     """
     EN:
         The function takes all recipes from the database, as well as the ingredients for this recipe,
@@ -60,7 +61,15 @@ async def get_all_recipes() -> List[Dict[str, str]]:
                     for d in data.ingredients
                 ],
             }
-            information_dish.append(RecipeOut(**result_data))
+            information_dish.append(
+                RecipeOut(
+                    id=cast(int, result_data["id"]),
+                    name_recipe=cast(str, result_data["name_recipe"]),
+                    cooking_time_minutes=cast(int, result_data["cooking_time_minutes"]),
+                    number_of_recipe_views=cast(int, result_data["number_of_recipe_views"]),
+                    ingredients=cast(list[dict[str, str]], result_data["ingredients"]),
+                )
+            )
         main_log.debug(
             "The function `get_all_recipes` successfully completed its execution."
         )
